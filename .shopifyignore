@@ -1,0 +1,8 @@
+_src/*
+node_modules
+.gitignore
+.npmrc
+.prettierrc
+package.json
+pnpm-lock.yaml
+*.config.js

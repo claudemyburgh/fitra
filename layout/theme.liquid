@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+        <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+        <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <title>
+        {{ page_title }}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+    {{ content_for_header }}
+
+    {{ 'style.css' | asset_url | stylesheet_tag }}
+
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+        if (Shopify.designMode) {
+            document.documentElement.classList.add('shopify-design-mode');
+        }
+    </script>
+
+</head>
+<body class="bg-gray-300">
+
+{% for link in linklists.main-menu.links %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if linklists[child_list_handle].links != blank %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        [{% for childlink in linklists[child_list_handle].links %}
+        <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+    {% endfor %}]
+    {% else %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+    {% endif %}
+{% endfor %}
+
+<a href="/cart">cart</a>
+<div class="border-b border-gray-400">
+
+{% if shop.customer_accounts_enabled %}
+    {% if customer %}
+        <a href="/account">account</a>
+        {{ 'log out' | customer_logout_link }}
+    {% else %}
+        {{ 'log in ' | customer_login_link }}
+        {{ 'register' | customer_register_link }}
+    {% endif %}
+{% endif %}
+</div>
+
+<main role="main" class="wrapper">
+    {{ content_for_layout }}
+</main>
+
+
+<script type="application/javascript">
+    window.shopUrl = '{{ request.origin }}';
+    window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}'
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+
+<h1 class="font-bold text-5xl w-1/2 tracking-tight">
+    Shopify Starter with tailwindcss + Typescript
+</h1>
+
+{% for product in collections.frontpage.products limit: 4 %}
+    <div>
+        <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+        {{ product.price | money }}
+        {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
+        <a href="{{ product.url | within: collection }}">
+            {{ product | image_url: width: 300, height: 300 | image_tag }}
+        </a>
+    </div>
+{% endfor %}

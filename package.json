@@ -1,0 +1,30 @@
+{
+  "name": "shopify-starter-pack",
+  "version": "1.0.0",
+  "description": "Starter theme for shopify",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev:css": "tailwindcss -i _src/css/style.css -o assets/style.css -w",
+    "dev:ts": "node esbuild.config.js",
+    "dev": "run-p dev:*"
+  },
+  "keywords": [],
+  "author": "Claude Myburgh",
+  "license": "MIT",
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.0.2",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.8",
+    "autoprefixer": "^10.4.13",
+    "esbuild": "^0.16.12",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.20",
+    "prettier": "^2.8.1",
+    "tailwindcss": "^3.2.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
